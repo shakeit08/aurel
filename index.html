@@ -47,21 +47,19 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opa
 .fade-t,.fade-b{position:fixed;left:0;right:0;z-index:35;pointer-events:none}
 .fade-t{top:0;height:58px;background:linear-gradient(#0c0a09f0,#0c0a0900)}
 .fade-b{bottom:0;height:100px;background:linear-gradient(#0c0a0900,#0c0a09f5 55%)}
-/* staff navigation */
-.staff{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:40;width:min(680px,calc(100vw - 32px));height:62px;
-  display:grid;grid-template-columns:34px 1fr 34px;align-items:center;gap:6px}
-.lines{position:relative;height:30px;background:repeating-linear-gradient(to bottom,#c9a96e40 0 1px,transparent 1px 7.25px);background-size:100% 30px}
-.lines::before{content:"𝄞";position:absolute;left:-2px;top:-14px;font-size:44px;line-height:1;color:var(--gold);opacity:.75;font-family:serif}
-.notes{position:absolute;inset:0 0 0 26px;display:flex;justify-content:space-around}
-.note{position:relative;width:34px;height:30px}
-.note i{position:absolute;left:50%;width:11px;height:8px;border-radius:50%;background:#6f655a;transform:translateX(-50%) rotate(-20deg);transition:.4s}
-.note i::after{content:"";position:absolute;right:0;bottom:3px;width:1px;height:18px;background:inherit}
-.note b{position:absolute;top:33px;left:50%;transform:translateX(-50%);font:500 9.5px var(--deco);letter-spacing:.12em;color:var(--dim);white-space:nowrap;transition:.4s}
-.note.on i{background:var(--gold2);box-shadow:0 0 10px #ead6a6aa}
-.note.on b{color:var(--gold2)}
-.note:hover i{background:var(--gold)}
-.arrow{width:34px;height:34px;border:1px solid var(--line);color:var(--gold);font-size:14px;background:#0c0a09aa;transition:.3s}
-.arrow:hover{border-color:var(--gold)}
+/* navigation */
+.staff{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:40;width:min(560px,calc(100vw - 32px));
+  display:grid;grid-template-columns:30px 1fr 30px;align-items:center;gap:18px}
+.mid{display:flex;flex-direction:column;align-items:center;gap:10px}
+.cur{font:500 10.5px var(--deco);letter-spacing:.35em;color:var(--gold2);white-space:nowrap;min-height:14px}
+.cur span{color:var(--dim);margin-right:10px}
+.notes{display:flex;gap:6px;width:100%}
+.note{flex:1;height:14px;position:relative}
+.note::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#c9a96e33;transition:background .5s,height .5s}
+.note:hover::before{background:#c9a96e88}
+.note.on::before{background:var(--gold);height:2px;margin-top:-.5px}
+.arrow{width:30px;height:30px;color:var(--gold);font-size:13px;opacity:.7;transition:.3s}
+.arrow:hover{opacity:1}
 .arrow:disabled{opacity:.25;cursor:default}
 
 /* track */
@@ -234,7 +232,6 @@ h2{font-family:var(--deco);font-weight:500;letter-spacing:.12em;font-size:clamp(
   .book{transform:none}
 }
 @media(max-width:560px){
-  .note b{font-size:8px;letter-spacing:.05em}
   .pf div{grid-template-columns:84px 1fr}
   .lh{grid-template-columns:1fr}
   .brand small{display:none}
@@ -467,7 +464,7 @@ h2{font-family:var(--deco);font-weight:500;letter-spacing:.12em;font-size:clamp(
 <div class="fade-t"></div><div class="fade-b"></div>
 <nav class="staff" aria-label="movements">
   <button class="arrow" id="prev" aria-label="previous">←</button>
-  <div class="lines"><div class="notes" id="notes"></div></div>
+  <div class="mid"><div class="cur" id="cur"></div><div class="notes" id="notes"></div></div>
   <button class="arrow" id="next" aria-label="next">→</button>
 </nav>
 
@@ -479,16 +476,17 @@ document.querySelectorAll('[data-set]').forEach(b=>b.onclick=()=>setLang(b.datas
 
 /* slides */
 const track=document.getElementById('track'),slides=[...track.children],N=slides.length;
-const LABELS=['OUV.','I','II','III','IV','V','VI','FIN'];
-const HEIGHTS=[22,15,8,11,4,1,8,22]; // note positions on the staff (px from top)
+const LABELS=['OUVERTURE','LES ANNÉES FOLLES','LE MUSICIEN','SA VOIX','TROIS NUITS','LE JOURNAL','LES VISAGES','FINALE'];
+const NUM=['','I','II','III','IV','V','VI',''];
 const notes=document.getElementById('notes');
-LABELS.forEach((l,i)=>{const n=document.createElement('button');n.className='note';n.innerHTML=`<i style="top:${HEIGHTS[i]}px"></i><b>${l}</b>`;n.onclick=()=>go(i);n.setAttribute('aria-label',l);notes.appendChild(n)});
+LABELS.forEach((l,i)=>{const n=document.createElement('button');n.className='note';n.onclick=()=>go(i);n.setAttribute('aria-label',l);notes.appendChild(n)});
 let cur=-1,lock=false;
 function go(i){
   i=Math.max(0,Math.min(N-1,i)); if(i===cur)return;
   cur=i; track.style.transform=`translateX(${-100*i}vw)`;
   slides.forEach((s,k)=>{s.classList.toggle('on',k===i); if(k===i)s.scrollTop=0});
   [...notes.children].forEach((n,k)=>n.classList.toggle('on',k===i));
+  document.getElementById('cur').innerHTML=(NUM[i]?`<span>${NUM[i]}</span>`:'')+LABELS[i];
   document.getElementById('prev').disabled=i===0; document.getElementById('next').disabled=i===N-1;
   history.replaceState(null,'','#'+i);
   lock=true; setTimeout(()=>lock=false,1000);
