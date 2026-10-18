@@ -2,485 +2,540 @@
 <html lang="ko" data-lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AUREL — Eternal Adolescence</title>
-<meta name="description" content="1924년 파리, 열여덟의 얼굴로 백 년을 산 뱀파이어 오렐 발랑쉐. RisuAI 캐릭터 봇.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AUREL — Programme du Soir</title>
+<meta name="description" content="1920년대 파리, 변해가는 세계를 냉소적으로 관찰하는 불멸의 방관자. RisuAI 캐릭터 봇 오렐 발랑쉐.">
 <meta property="og:title" content="AUREL — Eternal Adolescence">
-<meta property="og:description" content="1924, Paris. A 104-year-old vampire forever trapped at eighteen.">
-<meta property="og:image" content="assets/img/main.webp">
+<meta property="og:description" content="1920년대 파리, 변해가는 세계를 냉소적으로 관찰하는 불멸의 방관자.">
+<meta property="og:image" content="assets/img/og.jpg">
 <link rel="icon" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;500;600&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0d0b0a; --bg2:#15110f; --panel:#1b1613; --line:#3a2f24;
-  --gold:#c9a96e; --gold2:#e6d2a3; --ivory:#ece4d6; --mute:#9d9184; --dim:#6d6359;
-  --blood:#8e1f24; --emerald:#2f7d63;
+  --bg:#0c0a09; --panel:#16110e; --line:#3a2f24;
+  --gold:#c9a96e; --gold2:#ead6a6; --ivory:#ece4d6; --mute:#a39684; --dim:#6f655a;
+  --blood:#8e1f24; --emerald:#3b8f72; --paper:#e9dfc9; --ink:#3a2a1d;
   --serif:"Cormorant Garamond","Noto Serif KR",Georgia,serif;
   --kr:"Noto Serif KR","Cormorant Garamond",serif;
   --deco:"Cinzel","Cormorant Garamond",serif;
+  --ease:cubic-bezier(.77,0,.18,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ivory);font-family:var(--kr);font-weight:300;line-height:1.85;font-size:16px;overflow-x:hidden}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{color:var(--ivory);font-family:var(--kr);font-weight:300;line-height:1.8;font-size:15.5px}
+[data-lang="en"] body{font-family:var(--serif);font-size:17.5px}
+[data-lang="ko"] .en,[data-lang="en"] .ko{display:none!important}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-[data-lang="ko"] .en,[data-lang="en"] .ko{display:none!important}
-[data-lang="en"] body{font-family:var(--serif);font-size:18px}
-
-/* grain */
-body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.05;
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.05;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
-/* nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px clamp(16px,4vw,48px);
-  background:linear-gradient(#0d0b0ae6,#0d0b0a00);backdrop-filter:blur(2px)}
-.brand{font-family:var(--deco);letter-spacing:.35em;font-size:15px;color:var(--gold)}
-.navlinks{display:flex;gap:26px;align-items:center;font-family:var(--deco);font-size:12px;letter-spacing:.18em;color:var(--mute)}
-.navlinks a:hover{color:var(--gold2)}
-.lang{display:flex;border:1px solid var(--line)}
-.lang button{background:none;border:0;color:var(--dim);font:500 11px var(--deco);letter-spacing:.15em;padding:5px 10px;cursor:pointer}
+/* chrome */
+.top{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:16px clamp(16px,4vw,44px);pointer-events:none}
+.top>*{pointer-events:auto}
+.back{font:500 10.5px var(--deco);letter-spacing:.2em;color:var(--dim);border:1px solid var(--line);padding:5px 10px;background:#0c0a09aa;transition:.3s}.back:hover{color:var(--gold2);border-color:var(--gold)}
+.brand{font:500 13px var(--deco);letter-spacing:.4em;color:var(--gold)}
+.brand small{color:var(--dim);letter-spacing:.25em;margin-left:10px;font-size:10px}
+.lang{display:flex;border:1px solid var(--line);background:#0c0a09aa}
+.lang button{font:500 10.5px var(--deco);letter-spacing:.15em;padding:5px 10px;color:var(--dim)}
 [data-lang="ko"] .lang .bko,[data-lang="en"] .lang .ben{background:var(--gold);color:var(--bg)}
-@media(max-width:760px){.navlinks a{display:none}}
 
-/* hero */
-.hero{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:clamp(24px,5vw,80px);
-  padding:110px clamp(16px,6vw,96px) 70px;position:relative;
-  background:radial-gradient(ellipse at 75% 40%,#2a1d14 0%,transparent 60%),radial-gradient(ellipse at 10% 90%,#1d0e0e 0%,transparent 55%)}
-.eyebrow{font-family:var(--deco);font-size:12px;letter-spacing:.4em;color:var(--gold);display:flex;align-items:center;gap:14px}
-.eyebrow::before{content:"";width:42px;height:1px;background:var(--gold)}
-.hero h1{font-family:var(--deco);font-weight:500;font-size:clamp(64px,11vw,148px);letter-spacing:.12em;line-height:1;margin:22px 0 6px;
+/* edge fades so inner-scrolling content never sits under the chrome */
+.fade-t,.fade-b{position:fixed;left:0;right:0;z-index:35;pointer-events:none}
+.fade-t{top:0;height:58px;background:linear-gradient(#0c0a09f0,#0c0a0900)}
+.fade-b{bottom:0;height:100px;background:linear-gradient(#0c0a0900,#0c0a09f5 55%)}
+/* staff navigation */
+.staff{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:40;width:min(680px,calc(100vw - 32px));height:62px;
+  display:grid;grid-template-columns:34px 1fr 34px;align-items:center;gap:6px}
+.lines{position:relative;height:30px;background:repeating-linear-gradient(to bottom,#c9a96e40 0 1px,transparent 1px 7.25px);background-size:100% 30px}
+.lines::before{content:"𝄞";position:absolute;left:-2px;top:-14px;font-size:44px;line-height:1;color:var(--gold);opacity:.75;font-family:serif}
+.notes{position:absolute;inset:0 0 0 26px;display:flex;justify-content:space-around}
+.note{position:relative;width:34px;height:30px}
+.note i{position:absolute;left:50%;width:11px;height:8px;border-radius:50%;background:#6f655a;transform:translateX(-50%) rotate(-20deg);transition:.4s}
+.note i::after{content:"";position:absolute;right:0;bottom:3px;width:1px;height:18px;background:inherit}
+.note b{position:absolute;top:33px;left:50%;transform:translateX(-50%);font:500 9.5px var(--deco);letter-spacing:.12em;color:var(--dim);white-space:nowrap;transition:.4s}
+.note.on i{background:var(--gold2);box-shadow:0 0 10px #ead6a6aa}
+.note.on b{color:var(--gold2)}
+.note:hover i{background:var(--gold)}
+.arrow{width:34px;height:34px;border:1px solid var(--line);color:var(--gold);font-size:14px;background:#0c0a09aa;transition:.3s}
+.arrow:hover{border-color:var(--gold)}
+.arrow:disabled{opacity:.25;cursor:default}
+
+/* track */
+.track{display:flex;height:100%;transition:transform 1.1s var(--ease);will-change:transform}
+.slide{flex:0 0 100vw;width:100vw;height:100%;position:relative;overflow-x:hidden;overflow-y:auto;scrollbar-width:none}
+.slide::-webkit-scrollbar{display:none}
+.in{position:relative;z-index:2;min-height:100%;max-width:1220px;margin:0 auto;padding:76px clamp(16px,5vw,64px) 104px;display:flex;flex-direction:column;justify-content:center}
+.bg{position:absolute;inset:0;z-index:0}
+.bg img{width:100%;height:100%;object-fit:cover}
+
+/* entrance */
+.slide [data-a]{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
+.slide.on [data-a]{opacity:1;transform:none}
+.slide.on [data-a="1"]{transition-delay:.35s}.slide.on [data-a="2"]{transition-delay:.5s}.slide.on [data-a="3"]{transition-delay:.65s}.slide.on [data-a="4"]{transition-delay:.8s}.slide.on [data-a="5"]{transition-delay:.95s}
+
+/* shared type */
+.mv{font:500 11.5px var(--deco);letter-spacing:.4em;color:var(--gold);display:flex;align-items:center;gap:14px}
+.mv::before{content:"";width:36px;height:1px;background:var(--gold)}
+h2{font-family:var(--deco);font-weight:500;letter-spacing:.12em;font-size:clamp(28px,3.6vw,46px);line-height:1.15;margin:10px 0 6px}
+.tempo{font-family:var(--serif);font-style:italic;color:var(--mute);font-size:17px;margin-bottom:clamp(18px,3.5vh,36px)}
+.btn{display:inline-block;font:500 12px var(--deco);letter-spacing:.22em;padding:14px 26px;border:1px solid var(--gold);transition:.3s}
+.btn.p{background:var(--gold);color:var(--bg)}.btn.p:hover{background:var(--gold2)}
+.btn.g{color:var(--gold)}.btn.g:hover{background:#c9a96e1a}
+
+/* 0 overture */
+.s0 .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0c0a09f2 0%,#0c0a09c8 34%,#0c0a0930 62%,#0c0a0900 80%),linear-gradient(0deg,#0c0a09d0 0%,transparent 30%)}
+.s0 .bg img{object-position:68% 40%;animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{to{transform:scale(1.06) translateX(-1%)}}
+.s0 .in{max-width:none;margin:0;padding-left:clamp(20px,7vw,110px)}
+.s0 .copy{max-width:540px}
+.s0 h1{font-family:var(--deco);font-weight:500;font-size:clamp(64px,10vw,140px);letter-spacing:.12em;line-height:1;margin:18px 0 4px;
   background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,#8a6d3e);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero .sub{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.6vw,32px);color:var(--gold2);letter-spacing:.04em}
-.hero .kname{font-size:14px;color:var(--mute);letter-spacing:.25em;margin-top:4px}
-.hero .lead{margin:34px 0 40px;max-width:30em;font-size:clamp(16px,1.4vw,18px);color:#d7cdbd}
-.hero .lead em{font-style:normal;color:var(--gold2)}
-.btns{display:flex;gap:14px;flex-wrap:wrap}
-.btn{font-family:var(--deco);font-size:13px;letter-spacing:.22em;padding:15px 30px;border:1px solid var(--gold);transition:.3s}
-.btn.primary{background:var(--gold);color:var(--bg)}
-.btn.primary:hover{background:var(--gold2)}
-.btn.ghost{color:var(--gold)}
-.btn.ghost:hover{background:#c9a96e1a}
-.meta{display:flex;gap:28px;margin-top:44px;font-size:12px;color:var(--dim);letter-spacing:.12em;flex-wrap:wrap}
-.meta b{display:block;font:500 13px var(--deco);color:var(--gold);letter-spacing:.2em;margin-bottom:2px}
-.portrait{position:relative;justify-self:center;width:min(100%,460px)}
-.portrait .frame{position:relative;padding:14px;border:1px solid var(--line)}
-.portrait .frame::before,.portrait .frame::after{content:"";position:absolute;width:46px;height:46px;border:1px solid var(--gold)}
-.portrait .frame::before{top:-6px;left:-6px;border-right:0;border-bottom:0}
-.portrait .frame::after{bottom:-6px;right:-6px;border-left:0;border-top:0}
-.portrait img{width:100%;aspect-ratio:832/1216;object-fit:cover;filter:saturate(.92) contrast(1.03)}
-.portrait .cap{position:absolute;bottom:-30px;right:0;font-family:var(--serif);font-style:italic;color:var(--dim);font-size:15px}
-.scroll{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);font:11px var(--deco);letter-spacing:.3em;color:var(--dim)}
-@media(max-width:860px){.hero{grid-template-columns:1fr;padding-top:96px}.portrait{order:-1;width:min(78%,360px)}.scroll{display:none}}
+.s0 .sub{font-family:var(--serif);font-style:italic;font-size:clamp(21px,2.4vw,30px);color:var(--gold2)}
+.s0 .kn{font-size:12.5px;color:var(--mute);letter-spacing:.25em}
+.s0 .lead{margin:clamp(20px,4vh,34px) 0 clamp(24px,4.5vh,38px);color:#e0d6c6;font-size:clamp(15px,1.3vw,17px)}
+.s0 .lead em{font-style:normal;color:var(--gold2)}
+.s0 .btns{display:flex;gap:12px;flex-wrap:wrap}
+.s0 .meta{display:flex;gap:26px;margin-top:clamp(22px,4vh,36px);font-size:11.5px;color:var(--dim);letter-spacing:.1em;flex-wrap:wrap}
+.s0 .meta b{display:block;font:500 12px var(--deco);color:var(--gold);letter-spacing:.2em}
 
-/* sections */
-section{padding:clamp(80px,11vw,140px) clamp(16px,6vw,96px);position:relative}
-.wrap{max-width:1180px;margin:0 auto}
-.sh{text-align:center;margin-bottom:clamp(44px,6vw,72px)}
-.sh .no{font:500 12px var(--deco);letter-spacing:.4em;color:var(--gold)}
-.sh h2{font-family:var(--deco);font-weight:500;font-size:clamp(30px,4vw,46px);letter-spacing:.14em;margin:10px 0 8px;color:var(--ivory)}
-.sh p{color:var(--mute);font-size:15px}
-.orn{display:flex;align-items:center;justify-content:center;gap:12px;color:var(--gold);margin:14px auto 0}
-.orn::before,.orn::after{content:"";width:70px;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
-.orn::after{transform:scaleX(-1)}
+/* 1 era */
+.s1 .bg img{opacity:.13;object-position:center}
+.s1 .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,transparent,#0c0a09 75%)}
+.era{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,72px);align-items:center}
+.era .head{font-size:clamp(22px,2.4vw,30px);color:var(--gold2);font-weight:400;line-height:1.4;margin-bottom:14px}
+[data-lang="en"] .era .head{font-family:var(--serif);font-style:italic}
+.era .desc p{color:#d7ccbb;font-size:clamp(15px,1.25vw,16.5px)}
+.kw{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:clamp(18px,3.5vh,30px) 0}
+.kw div{background:#100d0bee;padding:16px 12px;text-align:center}
+.kw b{display:block;font:500 12.5px var(--deco);letter-spacing:.18em;color:var(--gold)}
+.kw span{font-size:12.5px;color:var(--mute)}
+.verdict{border-left:2px solid var(--gold);padding:4px 0 4px 18px;font-size:clamp(16px,1.5vw,19px);color:var(--ivory)}
+[data-lang="en"] .verdict{font-family:var(--serif);font-style:italic}
+.dp h4{font:500 11px var(--deco);letter-spacing:.35em;color:var(--gold);text-align:center;margin-bottom:6px}
+.dp .orn{text-align:center;color:var(--gold);font-size:12px;margin-bottom:14px}
+.dp dl div{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px dotted #3a2f24}
+.dp dt{font-family:var(--serif);font-size:19px;color:var(--ivory);white-space:nowrap}
+.dp dd{flex:1;text-align:right;font-size:13.5px;color:var(--mute);display:flex;gap:10px;align-items:baseline}
+.dp dd::before{content:"";flex:1;border-bottom:1px dotted #4a3d2f;transform:translateY(-4px)}
 
-/* prologue */
-.prologue{background:var(--bg2);text-align:center;border-top:1px solid #1f1914;border-bottom:1px solid #1f1914}
-.prologue blockquote{font-family:var(--serif);font-style:italic;font-size:clamp(24px,3.4vw,40px);line-height:1.45;color:var(--gold2);max-width:900px;margin:0 auto}
-[data-lang="ko"] .prologue blockquote{font-family:var(--kr);font-style:normal;font-weight:300;font-size:clamp(20px,2.6vw,30px)}
-.prologue .body{max-width:720px;margin:40px auto 0;color:#cfc4b4;font-size:16.5px}
-.prologue .body p+p{margin-top:1.1em}
+/* 2 musician */
+.mus{display:grid;grid-template-columns:auto 1fr;gap:clamp(26px,4.5vw,64px);align-items:center}
+.mus .pt{height:min(62vh,560px);aspect-ratio:832/1216;position:relative;padding:10px;border:1px solid var(--line)}
+.mus .pt img{width:100%;height:100%;object-fit:cover}
+.mus .pt::before,.mus .pt::after{content:"";position:absolute;width:36px;height:36px;border:1px solid var(--gold)}
+.mus .pt::before{top:-5px;left:-5px;border-right:0;border-bottom:0}.mus .pt::after{bottom:-5px;right:-5px;border-left:0;border-top:0}
+.pf{border-top:1px solid var(--line)}
+.pf div{display:grid;grid-template-columns:110px 1fr;gap:14px;padding:clamp(7px,1.25vh,11px) 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.pf dt{font:500 11px var(--deco);letter-spacing:.2em;color:var(--gold);padding-top:4px}
+.pf dd small{color:var(--dim)}
+.lh{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:clamp(14px,2.5vh,22px)}
+.lh h5{font:500 11px var(--deco);letter-spacing:.25em;color:var(--gold);margin-bottom:8px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12.5px;padding:3px 10px;border:1px solid var(--line);color:var(--mute)}
+.tag.l{border-color:#3b8f7255;color:#93c9b3}.tag.h{border-color:#8e1f2466;color:#d79494}
 
-/* profile */
-.profile{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,70px);align-items:start}
-.pgallery{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.pgallery img{width:100%;aspect-ratio:832/1216;object-fit:cover;border:1px solid var(--line);transition:.4s}
-.pgallery img:hover{border-color:var(--gold)}
-.pgallery img:first-child{grid-row:span 2;height:100%}
-.ptable{border-top:1px solid var(--line)}
-.prow{display:grid;grid-template-columns:130px 1fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--line);font-size:15px}
-.prow dt{font:500 12px var(--deco);letter-spacing:.2em;color:var(--gold);padding-top:4px}
-.prow dd{color:#ddd3c4}
-.prow dd small{color:var(--dim)}
-.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
-.tag{font-size:13px;padding:5px 12px;border:1px solid var(--line);color:var(--mute)}
-.tag.like{border-color:#2f7d6355;color:#8fc5b0}
-.tag.hate{border-color:#8e1f2455;color:#d38b8b}
-.cols2{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:30px}
-.cols2 h4{font:500 12px var(--deco);letter-spacing:.25em;color:var(--gold);margin-bottom:6px}
-@media(max-width:860px){.profile{grid-template-columns:1fr}.prow{grid-template-columns:96px 1fr}.cols2{grid-template-columns:1fr}}
+/* 3 voice */
+.s3 .bg img{opacity:.22;object-position:center 30%;filter:grayscale(.4)}
+.s3 .bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,#0c0a09aa,#0c0a09 72%)}
+.voice{text-align:center;max-width:900px;margin:0 auto}
+.voice .mv{justify-content:center}.voice .mv::after{content:"";width:36px;height:1px;background:var(--gold)}
+.qbox{position:relative;min-height:clamp(220px,34vh,300px);display:grid;place-items:center;margin:clamp(16px,3vh,30px) 0}
+.qt{grid-area:1/1;opacity:0;transform:translateY(10px);transition:opacity .7s,transform .7s;pointer-events:none}
+.qt.on{opacity:1;transform:none;pointer-events:auto}
+.qt p{font-family:var(--serif);font-style:italic;font-size:clamp(24px,3.3vw,40px);line-height:1.4;color:var(--gold2)}
+[data-lang="ko"] .qt p{font-family:var(--kr);font-style:normal;font-weight:300;font-size:clamp(19px,2.3vw,28px);line-height:1.65}
+.qt .orig{display:block;margin-top:16px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--dim)}
+[data-lang="en"] .qt .orig{display:none}
+.qnav{display:flex;justify-content:center;gap:10px}
+.qnav button{font:500 12px var(--deco);letter-spacing:.15em;width:44px;height:30px;border:1px solid var(--line);color:var(--dim);transition:.3s}
+.qnav button.on{border-color:var(--gold);color:var(--gold2)}
+.bigq{font-family:var(--serif);font-size:120px;line-height:.4;color:var(--gold);opacity:.35;height:40px}
 
-/* quotes */
-.quotes{background:linear-gradient(180deg,var(--bg),#120d0c 50%,var(--bg))}
-.qgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.q{padding:34px 34px 28px;border:1px solid var(--line);background:#16110f;position:relative}
-.q::before{content:"“";position:absolute;top:-10px;left:22px;font-family:var(--serif);font-size:84px;color:var(--gold);line-height:1;opacity:.6}
-.q p{font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.55;color:var(--ivory)}
-[data-lang="ko"] .q p{font-family:var(--kr);font-style:normal;font-size:16.5px;line-height:1.9}
-.q .orig{display:block;margin-top:14px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--dim)}
-@media(max-width:760px){.qgrid{grid-template-columns:1fr}}
+/* 4 nights */
+.nights{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.nt{border:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;transition:border-color .4s}
+.nt:hover{border-color:var(--gold)}
+.nt .im{aspect-ratio:16/10;overflow:hidden;position:relative}
+.nt .im img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
+.nt:hover .im img{transform:scale(1.05)}
+.nt .im span{position:absolute;top:12px;left:12px;font:500 11px var(--deco);letter-spacing:.25em;background:#0c0a09cc;color:var(--gold);padding:4px 10px}
+.nt .tx{padding:clamp(14px,2.4vh,22px) 20px;flex:1;display:flex;flex-direction:column}
+.nt .wh{font:500 10.5px var(--deco);letter-spacing:.22em;color:var(--gold)}
+.nt h3{font-family:var(--serif);font-weight:500;font-size:clamp(21px,1.9vw,25px);line-height:1.25;margin:4px 0 2px}
+.nt .rl{font-size:12px;color:var(--emerald);margin-bottom:8px}
+.nt p{font-size:13.5px;color:#cbbfae;line-height:1.75}
+.nt .dy{margin-top:auto;padding:10px 12px;border-left:2px solid var(--blood);background:#0e0b0a;font-size:12.5px;color:#bdae98}
+.nt p+.dy{margin-top:12px}
+[data-lang="en"] .nt .dy{font-family:var(--serif);font-style:italic;font-size:14.5px}
+.nt .dy b{display:block;font:500 9.5px var(--deco);letter-spacing:.25em;color:#b5595d;font-style:normal}
 
-/* scenarios */
-.scn{display:grid;gap:28px}
-.card{display:grid;grid-template-columns:1.25fr 1fr;border:1px solid var(--line);background:var(--panel);overflow:hidden}
-.card:nth-child(even){grid-template-columns:1fr 1.25fr}
-.card:nth-child(even) .cimg{order:2}
-.cimg{position:relative;min-height:320px}
-.cimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s}
-.card:hover .cimg img{transform:scale(1.04)}
-.cimg .num{position:absolute;top:18px;left:20px;font:500 12px var(--deco);letter-spacing:.3em;background:#0d0b0acc;color:var(--gold);padding:6px 12px}
-.ctext{padding:clamp(26px,3.5vw,46px);display:flex;flex-direction:column;justify-content:center}
-.ctext .when{font:500 12px var(--deco);letter-spacing:.25em;color:var(--gold)}
-.ctext h3{font-family:var(--serif);font-weight:500;font-size:clamp(26px,2.6vw,34px);line-height:1.2;margin:8px 0 4px}
-.ctext .rel{font-size:13px;color:var(--emerald);letter-spacing:.06em;margin-bottom:16px}
-.ctext .ex{font-size:15px;color:#cfc4b4}
-.diary{margin-top:22px;padding:16px 18px;border-left:2px solid var(--blood);background:#0f0c0b;font-family:var(--serif);font-style:italic;color:#c8b9a4;font-size:15.5px}
-[data-lang="ko"] .diary{font-family:var(--kr);font-style:normal;font-size:14.5px}
-.diary b{display:block;font:500 11px var(--deco);letter-spacing:.25em;color:#b2575b;font-style:normal;margin-bottom:4px}
-@media(max-width:860px){.card,.card:nth-child(even){grid-template-columns:1fr}.card:nth-child(even) .cimg{order:0}.cimg{min-height:220px;aspect-ratio:16/10}}
+/* 5 journal */
+.jr{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:center}
+.book{background:var(--paper);color:var(--ink);padding:clamp(22px,3.5vh,34px) clamp(22px,3vw,36px);box-shadow:0 20px 50px #000a,inset 0 0 60px #b9a57d55;transform:rotate(-1deg);position:relative}
+.book::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:1px;background:#c79a9a88}
+.book h4{font:600 11px var(--deco);letter-spacing:.3em;color:var(--blood)}
+.book .st{margin:12px 0 18px;border:1px solid #b7a07a;font-size:12.5px;display:flex;flex-wrap:wrap}
+.book .st span{padding:6px 10px;border-right:1px solid #cdb994}
+.book .st span:last-child{flex:1 1 100%;border-right:0;border-top:1px solid #cdb994;font-style:italic;color:#6a4a2c}
+.book .en-t{font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.55}
+[data-lang="ko"] .book .en-t{font-family:var(--kr);font-style:normal;font-size:15px;line-height:1.85}
+.book .dt{font:600 11px var(--deco);letter-spacing:.25em;color:var(--blood);margin-bottom:4px;display:block}
+.book .sig{text-align:right;font-family:var(--serif);font-style:italic;margin-top:10px;color:#6a4a2c}
+.book .bnote{font-size:12px;color:#7b6448;margin-top:14px;border-top:1px dashed #b7a07a;padding-top:10px}
+.feat h3{font-family:var(--serif);font-weight:500;font-size:22px;margin-bottom:2px}
+.feat .k{font:500 10.5px var(--deco);letter-spacing:.3em;color:var(--gold)}
+.feat>div+div{margin-top:clamp(16px,3vh,26px)}
+.rels{display:grid;gap:6px;margin-top:8px}
+.rels div{display:flex;gap:12px;align-items:baseline;padding:8px 12px;border:1px solid var(--line);font-size:13.5px}
+.rels b{font:500 10.5px var(--deco);color:var(--gold);min-width:20px}
+.rels small{color:var(--dim);margin-left:6px}
+.rels .on{border-color:var(--gold);background:#c9a96e10}
+.feat p{font-size:13.5px;color:var(--mute)}
 
-/* systems */
-.systems{background:var(--bg2)}
-.sysgrid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.sys{border:1px solid var(--line);padding:32px;background:var(--bg)}
-.sys .ic{font:500 11px var(--deco);letter-spacing:.3em;color:var(--gold)}
-.sys h3{font-family:var(--serif);font-weight:500;font-size:26px;margin:4px 0 10px}
-.sys>p{color:var(--mute);font-size:15px}
-.mock{margin-top:20px;font-size:13.5px}
-.status{display:flex;flex-wrap:wrap;border:1px solid #4a3b2b;background:#120e0c}
-.status span{padding:8px 12px;border-right:1px solid #2c241c;color:#d7cbb8}
-.status span:first-child{font-size:16px}
-.status span:last-child{border-right:0;flex:1 1 100%;border-top:1px solid #2c241c;font-style:italic;color:var(--gold2)}
-.dmock{background:#e9dfc9;color:#3a2a1d;padding:20px 22px 18px;font-family:var(--serif);font-style:italic;font-size:16px;line-height:1.6;box-shadow:0 10px 30px #0008;transform:rotate(-.6deg)}
-[data-lang="ko"] .dmock{font-family:var(--kr);font-style:normal;font-size:14px}
-.dmock .d{font:600 11px var(--deco);letter-spacing:.25em;color:#8e1f24;font-style:normal;display:block;margin-bottom:6px}
-.rels{display:grid;gap:8px;margin-top:20px}
-.rels div{display:flex;gap:14px;align-items:baseline;padding:10px 14px;border:1px solid var(--line);font-size:14.5px}
-.rels div b{font:500 11px var(--deco);letter-spacing:.2em;color:var(--gold);min-width:22px}
-.rels div.on{border-color:var(--gold);background:#c9a96e0f}
-.rels div span small{color:var(--dim);margin-left:6px}
-.langmock{display:flex;gap:10px;margin-top:20px}
-.langmock div{flex:1;border:1px solid var(--line);padding:14px;font-size:14px;color:#cfc4b4}
-.langmock div b{display:block;font:500 11px var(--deco);letter-spacing:.25em;color:var(--gold);margin-bottom:4px}
-@media(max-width:860px){.sysgrid{grid-template-columns:1fr}.sys{padding:24px}}
+/* 6 faces */
+.fc{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,4vw,60px);align-items:center}
+.fc .stage{height:min(64vh,580px);aspect-ratio:832/1216;background:#f2eee7;border:1px solid var(--line);position:relative;cursor:pointer;overflow:hidden}
+.fc .stage img{width:100%;height:100%;object-fit:cover;transition:opacity .3s}
+.fc .stage .pg{position:absolute;bottom:10px;right:12px;font:500 11px var(--deco);letter-spacing:.2em;color:#3a2a1d;background:#f2eee7cc;padding:2px 8px}
+.fc .name{font-family:var(--serif);font-style:italic;font-size:clamp(34px,4vw,54px);color:var(--gold2);line-height:1.1}
+.fc .name small{display:block;font-style:normal;font:400 14px var(--kr);color:var(--mute);margin-top:4px}
+.chips{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:clamp(16px,3vh,26px) 0 12px}
+.chips button{font:500 10.5px var(--deco);letter-spacing:.12em;padding:9px 4px;border:1px solid var(--line);color:var(--mute);transition:.25s}
+.chips button:hover{border-color:var(--gold);color:var(--gold2)}
+.chips button.on{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.fc .hint{font-size:12.5px;color:var(--dim)}
 
-/* expressions */
-.egrid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
-.ex-c{position:relative;cursor:pointer;background:#f3efe8;border:1px solid var(--line);overflow:hidden;aspect-ratio:832/1216}
-.ex-c img{width:100%;height:100%;object-fit:cover;transition:opacity .25s}
-.ex-c .lb{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;background:linear-gradient(transparent,#0d0b0ae0);display:flex;justify-content:space-between;align-items:end}
-.ex-c .lb b{font:500 11px var(--deco);letter-spacing:.2em;color:var(--gold2)}
-.ex-c .lb i{font-style:normal;font-size:10px;color:var(--mute);letter-spacing:.1em}
-.ex-c:hover{border-color:var(--gold)}
-.hint{text-align:center;color:var(--dim);font-size:13px;margin-top:20px}
-@media(max-width:860px){.egrid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:480px){.egrid{grid-template-columns:repeat(2,1fr)}}
+/* 7 finale */
+.s7 .bg img{object-position:center 35%}
+.s7 .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(#0c0a09e8,#0c0a09b0 50%,#0c0a09f0)}
+.fin{text-align:center}
+.fin h2{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:.01em;font-size:clamp(30px,4.4vw,56px);color:var(--gold2);line-height:1.3}
+[data-lang="ko"] .fin h2{font-family:var(--kr);font-style:normal;font-weight:300;font-size:clamp(23px,3.2vw,38px)}
+.fin p{color:var(--mute);margin:14px 0 30px}
+.fin .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.fin .cr{margin-top:clamp(30px,6vh,56px);font:500 11px var(--deco);letter-spacing:.3em;color:var(--dim)}
+.fin .cr b{color:var(--gold);font-weight:500}
 
-/* world */
-.world{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
-.w{background:var(--bg);padding:30px 28px}
-.w .k{font:500 11px var(--deco);letter-spacing:.28em;color:var(--gold)}
-.w h4{font-family:var(--serif);font-weight:500;font-size:23px;margin:6px 0 10px;line-height:1.25}
-.w p{font-size:14.5px;color:var(--mute)}
-@media(max-width:860px){.world{grid-template-columns:1fr}}
-
-/* cta */
-.cta{text-align:center;background:url(assets/img/w_opera.webp) center/cover;position:relative}
-.cta::before{content:"";position:absolute;inset:0;background:linear-gradient(#0d0b0ae6,#0d0b0ab8 50%,#0d0b0af2)}
-.cta>*{position:relative}
-.cta h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(28px,4vw,50px);color:var(--gold2);line-height:1.3;max-width:820px;margin:0 auto 14px}
-[data-lang="ko"] .cta h2{font-family:var(--kr);font-style:normal;font-weight:300;font-size:clamp(22px,3vw,36px)}
-.cta p{color:var(--mute);margin-bottom:36px}
-.cta .btns{justify-content:center}
-
-footer{padding:40px 16px;text-align:center;font-size:12px;color:var(--dim);letter-spacing:.12em;border-top:1px solid #1f1914}
-footer .brand{display:block;margin-bottom:8px}
-
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 1s,transform 1s}
-.reveal.in{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+/* responsive */
+@media(max-width:900px){
+  .era,.mus,.jr,.fc{grid-template-columns:1fr}
+  .mus .pt,.fc .stage{height:auto;width:min(62vw,300px);margin:0 auto}
+  .nights{grid-template-columns:1fr}
+  .kw{grid-template-columns:repeat(2,1fr)}
+  .s0 .bg::after{background:linear-gradient(0deg,#0c0a09f5 0%,#0c0a09d0 45%,#0c0a0940 75%,#0c0a0910)}
+  .s0 .bg img{object-position:56% 20%}
+  .s0 .in{justify-content:flex-end}
+  .fc .name{text-align:center}.fc .hint{text-align:center}
+  .chips{grid-template-columns:repeat(3,1fr)}
+  .book{transform:none}
+}
+@media(max-width:560px){
+  .note b{font-size:8px;letter-spacing:.05em}
+  .pf div{grid-template-columns:84px 1fr}
+  .lh{grid-template-columns:1fr}
+  .brand small{display:none}
+}
+@media(max-height:760px) and (min-width:901px){.in{padding-top:62px;padding-bottom:90px}.nt .im{aspect-ratio:16/7}.nt p{font-size:13px;line-height:1.65}.tempo{margin-bottom:14px}}
+@media(prefers-reduced-motion:reduce){.track{transition:none}.slide [data-a]{transition:none;opacity:1;transform:none}.s0 .bg img{animation:none}}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="#" class="brand">AUREL</a>
-  <div class="navlinks">
-    <a href="#profile">PROFILE</a>
-    <a href="#scenarios">SCENARIOS</a>
-    <a href="#systems">SYSTEM</a>
-    <a href="#expressions">GALLERY</a>
-    <div class="lang"><button class="bko" data-set="ko">KO</button><button class="ben" data-set="en">EN</button></div>
-  </div>
-</nav>
+<div class="top">
+  <div style="display:flex;align-items:center;gap:18px"><a href="../" class="back">← ARCHIVE</a><a href="#0" class="brand">AUREL<small>PROGRAMME DU SOIR</small></a></div>
+  <div class="lang"><button class="bko" data-set="ko">KO</button><button class="ben" data-set="en">EN</button></div>
+</div>
 
-<!-- HERO -->
-<header class="hero">
-  <div>
-    <div class="eyebrow">PARIS · 1924</div>
-    <h1>AUREL</h1>
-    <div class="sub">Eternal Adolescence</div>
-    <div class="kname">오렐 발랑쉐 · AUREL VALENÇAY</div>
-    <p class="lead">
-      <span class="ko">열다섯에 물려 열여덟의 얼굴로 멈춘 뱀파이어.<br>백 년 넘게 그를 <em>남자</em>로 봐준 사람은 아무도 없었다.<br>그리고 어느 오후, 서점에서 당신과 눈이 마주쳤다.</span>
-      <span class="en">A vampire turned in 1820 and frozen forever at eighteen.<br>For over a century, no one has looked at him and seen <em>a man</em>.<br>Then, one afternoon in a bookshop, his eyes met yours.</span>
+<main class="track" id="track">
+
+<!-- 0 · OUVERTURE -->
+<section class="slide s0">
+  <div class="bg"><img src="assets/img/w_roof.webp" alt=""></div>
+  <div class="in"><div class="copy">
+    <div class="mv" data-a="1">PARIS · 1924</div>
+    <h1 data-a="2">AUREL</h1>
+    <div data-a="2"><div class="sub">Eternal Adolescence</div><div class="kn">오렐 발랑쉐 · AUREL VALENÇAY</div></div>
+    <p class="lead" data-a="3">
+      <span class="ko">재즈가 흐르는 파리의 지붕 위, 백 년째 열여덟인 뱀파이어가 바이올린을 켠다.<br>변해가는 세계를 냉소적으로 내려다보는 <em>불멸의 방관자</em>.<br>— 단 한 사람 앞에서만은, 방관자로 남을 수 없는.</span>
+      <span class="en">On the rooftops of jazz-age Paris, a vampire eighteen for a century draws his bow.<br><em>An immortal bystander</em>, watching a changing world with cold contempt —<br>until one person makes it impossible to merely watch.</span>
     </p>
-    <div class="btns">
-      <a class="btn primary" href="Aurel.charx" download><span class="ko">봇 다운로드</span><span class="en">DOWNLOAD</span></a>
-      <a class="btn ghost" href="#scenarios"><span class="ko">시나리오 보기</span><span class="en">SCENARIOS</span></a>
+    <div class="btns" data-a="4">
+      <a class="btn p" href="https://realm.risuai.net/character/f674591c-9935-449c-bd16-87c1d0a067b6" target="_blank" rel="noopener"><span class="ko">RisuRealm에서 받기</span><span class="en">GET ON RISUREALM</span></a>
+      <button class="btn g" data-go="1"><span class="ko">공연 시작 →</span><span class="en">BEGIN →</span></button>
     </div>
-    <div class="meta">
+    <div class="meta" data-a="5">
       <div><b>RisuAI</b><span class="ko">플랫폼</span><span class="en">Platform</span></div>
       <div><b>v1.1</b><span class="ko">버전</span><span class="en">Version</span></div>
       <div><b>KO / EN</b><span class="ko">지원 언어</span><span class="en">Languages</span></div>
-      <div><b>붕쉐</b><span class="ko">제작</span><span class="en">Creator</span></div>
     </div>
-  </div>
-  <div class="portrait">
-    <div class="frame"><img src="assets/img/main.webp" alt="Aurel Valençay"></div>
-    <div class="cap">— Le Petit Marquis</div>
-  </div>
-  <div class="scroll">SCROLL ↓</div>
-</header>
-
-<!-- PROLOGUE -->
-<section class="prologue">
-  <div class="wrap reveal">
-    <blockquote>
-      <span class="ko">“이 얼굴로 내 본성을 가늠하지 마시죠.<br>당신 조부모가 죽은 세월보다 더 오래, 이 얼굴로 살아왔으니까.”</span>
-      <span class="en">“Do not mistake this face for a measure of my nature.<br>I have worn it for longer than your grandparents have been dead.”</span>
-    </blockquote>
-    <div class="orn">✦</div>
-    <div class="body">
-      <p class="ko">1820년, 겨울 가면무도회. 몰락한 후작가의 막내아들은 푸른 등불 아래에서 델핀이라는 여자에게 물렸다. 그 뒤로 그의 몸은 소년과 남자 사이 어딘가에 영원히 멈췄다.</p>
-      <p class="ko">1924년, 광란의 시대를 맞은 파리. 재즈와 전깃불이 밤을 밝히는 동안 오렐은 여전히 '재능 있는 아이' 취급을 받는다. 그가 바라는 건 단 하나 — 누군가 자신을 있는 그대로, 한 사람의 남자로 봐주는 것.</p>
-      <p class="en">1820, a winter masquerade. The youngest son of a fallen marquis was bitten beneath blue lanterns by a woman named Delphine. His body stopped forever somewhere between boy and man.</p>
-      <p class="en">1924, Paris in the Années Folles. While jazz and electric light flood the night, Aurel is still treated as “a talented child.” He wants only one thing — for someone to see him as he truly is: a man.</p>
-    </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- PROFILE -->
-<section id="profile">
-  <div class="wrap">
-    <div class="sh reveal"><div class="no">I · PROFILE</div><h2>AUREL VALENÇAY</h2><div class="orn">✦</div></div>
-    <div class="profile">
-      <div class="pgallery reveal">
-        <img src="assets/img/p_red.webp" alt="" loading="lazy">
-        <img src="assets/img/p_opera.webp" alt="" loading="lazy">
-        <img src="assets/img/p_cafe.webp" alt="" loading="lazy">
+<!-- I · LES ANNÉES FOLLES -->
+<section class="slide s1">
+  <div class="bg"><img src="assets/img/w_cafe.webp" alt="" loading="lazy"></div>
+  <div class="in"><div class="era">
+    <div>
+      <div class="mv" data-a="1">I · LES ANNÉES FOLLES</div>
+      <h2 data-a="1">PARIS, 1920s</h2>
+      <div class="tempo" data-a="1">Allegro con fuoco</div>
+      <div class="desc" data-a="2">
+        <div class="head"><span class="ko">1920년대 파리 — 전후의 향락</span><span class="en">Paris in the 1920s — Post-war Revelry</span></div>
+        <p class="ko">제1차 세계대전의 상처를 예술과 쾌락으로 치유하던 시대.<br>재즈, 아르데코, 초현실주의가 꽃피던 파리의 밤.<br>전통 귀족 사회의 붕괴와 새로운 문화의 탄생.</p>
+        <p class="en">An age that healed the wounds of the Great War with art and pleasure.<br>Paris nights in full bloom with jazz, Art Déco and Surrealism.<br>The fall of the old aristocracy, the birth of a new culture.</p>
       </div>
-      <div class="reveal">
-        <dl class="ptable">
-          <div class="prow"><dt>NAME</dt><dd>Aurel Valençay <small>/ 오렐 발랑쉐</small></dd></div>
-          <div class="prow"><dt>ALIAS</dt><dd><span class="ko">작은 후작 · 겨울 새끼 · 벨벳 송곳니</span><span class="en">Little Marquis · Winter Whelp · The Velvet Fang</span></dd></div>
-          <div class="prow"><dt>AGE</dt><dd><span class="ko">외견 18세 · 실제 104세</span><span class="en">Appears 18 · Actually 104</span> <small>(1805 – )</small></dd></div>
-          <div class="prow"><dt>RACE</dt><dd><span class="ko">뱀파이어 (전생자, 1820년 전환)</span><span class="en">Vampire (turned, 1820)</span></dd></div>
-          <div class="prow"><dt>BIRTH</dt><dd><span class="ko">1805년 1월 2일, 파리 · 염소자리</span><span class="en">January 2, 1805, Paris · Capricorn</span></dd></div>
-          <div class="prow"><dt>HEIGHT</dt><dd><span class="ko">167cm — 영원히 이 키</span><span class="en">167 cm — forever</span></dd></div>
-          <div class="prow"><dt>LOOKS</dt><dd><span class="ko">은빛 금발, 고양이처럼 날카로운 옅은 회색 눈, 반투명한 상아빛 피부</span><span class="en">Silver-blonde waves, pale grey feline eyes, translucent ivory skin</span></dd></div>
-          <div class="prow"><dt>SCENT</dt><dd><span class="ko">차가운 아이리스, 잉크 밴 양피지, 겨울 민트를 머금은 앰버그리스</span><span class="en">Cold iris, ink-stained parchment, ambergris softened with winter mint</span></dd></div>
-          <div class="prow"><dt>TREASURE</dt><dd><span class="ko">1742년산 과르네리 델 제수 바이올린</span><span class="en">A 1742 Guarneri del Gesù violin</span></dd></div>
-          <div class="prow"><dt>HOME</dt><dd><span class="ko">마레 지구의 폐쇄된 저택, 오텔 발랑쉐</span><span class="en">Hôtel Valençay, a shuttered townhouse in the Marais</span></dd></div>
-        </dl>
-        <div class="cols2">
-          <div>
-            <h4>LIKES</h4>
-            <div class="tags">
-              <span class="tag like ko">바이올린</span><span class="tag like en">Violin</span>
-              <span class="tag like ko">밤의 파리</span><span class="tag like en">Paris at night</span>
-              <span class="tag like ko">고딕 문학</span><span class="tag like en">Gothic literature</span>
-              <span class="tag like ko">태엽 시계·오르골</span><span class="tag like en">Pocket watches</span>
-              <span class="tag like ko">지적인 도전</span><span class="tag like en">Intellectual challenge</span>
-            </div>
-          </div>
-          <div>
-            <h4>HATES</h4>
-            <div class="tags">
-              <span class="tag hate ko">"꼬마"라는 말</span><span class="tag hate en">Being called "boy"</span>
-              <span class="tag hate ko">동정</span><span class="tag hate en">Pity</span>
-              <span class="tag hate ko">근대 문물·재즈</span><span class="tag hate en">Modernity & jazz</span>
-              <span class="tag hate ko">햇빛</span><span class="tag hate en">Sunlight</span>
-              <span class="tag hate ko">델핀</span><span class="tag hate en">Delphine</span>
-            </div>
-          </div>
-        </div>
+      <div class="kw" data-a="3">
+        <div><b>JAZZ</b><span class="ko">재즈</span><span class="en">the new sound</span></div>
+        <div><b>ART DÉCO</b><span class="ko">아르데코</span><span class="en">the new line</span></div>
+        <div><b>SURRÉALISME</b><span class="ko">초현실주의</span><span class="en">the new dream</span></div>
+        <div><b>LA CHUTE</b><span class="ko">귀족 사회의 붕괴</span><span class="en">the old order falls</span></div>
       </div>
+      <p class="verdict" data-a="4"><span class="ko">Aurel은 이 변화하는 세계를 냉소적으로 관찰하는 불멸의 방관자입니다.</span><span class="en">Aurel watches this changing world as a cynical, immortal bystander.</span></p>
     </div>
-  </div>
+    <div class="dp" data-a="3">
+      <h4>DRAMATIS PERSONAE</h4><div class="orn">✦</div>
+      <dl>
+        <div><dt>Aurel Valençay</dt><dd><span class="ko">불멸의 방관자</span><span class="en">the bystander</span></dd></div>
+        <div><dt>Delphine</dt><dd><span class="ko">그를 만든 자</span><span class="en">his sire</span></dd></div>
+        <div><dt>Saint-Germain</dt><dd><span class="ko">파리 뱀파이어 회합</span><span class="en">the coven</span></dd></div>
+        <div><dt>Lucien Moreau</dt><dd><span class="ko">부패한 경위</span><span class="en">a corrupt inspector</span></dd></div>
+        <div><dt>Hôtel Valençay</dt><dd><span class="ko">마레 지구의 저택</span><span class="en">his house, the Marais</span></dd></div>
+        <div><dt><span class="ko">당신</span><span class="en">You</span></dt><dd><span class="ko">그의 시선이 멈춘 사람</span><span class="en">the one he cannot look away from</span></dd></div>
+      </dl>
+    </div>
+  </div></div>
 </section>
 
-<!-- QUOTES -->
-<section class="quotes">
-  <div class="wrap">
-    <div class="sh reveal"><div class="no">II · VOICE</div><h2>IN HIS WORDS</h2><div class="orn">✦</div></div>
-    <div class="qgrid">
-      <div class="q reveal">
-        <p class="ko">나를 보고 소년이 보인다고요? 귀엽군요. 내 눈엔 유통기한이 붙은 고기가 보이는데.</p>
-        <p class="en">You look at me and see a boy. How quaint. I look at you and see meat with an expiration date.</p>
-      </div>
-      <div class="q reveal">
-        <p class="ko">불멸은 선물이 아니다. 영원의 가면을 쓴 반복일 뿐. 같은 허기, 같은 허영, 의미 없는 존재 속에서 의미를 찾는 같은 몸부림.</p>
-        <p class="en">Immortality is not a gift—it is repetition wearing the mask of eternity.</p>
-      </div>
-      <div class="q reveal">
-        <p class="ko">이젠 없어진 카페에서 쇼펜하우어를 독일어 원서로 읽었습니다. 그런데 당신은 내게 쿠키를 건네며 숙제는 다 했냐고 묻는군요.</p>
-        <p class="en">I have read Schopenhauer in the original German in cafés that no longer exist. And yet you offer me a cookie and ask if I've finished my homework.</p>
-      </div>
-      <div class="q reveal">
-        <p class="ko">Réveille-toi… 오늘 아침 센 강변을 걷기로 약속했잖아. 받아내야겠어.</p>
-        <p class="en">Réveille-toi… You promised me a walk by the Seine this morning. I intend to collect.</p>
+<!-- II · LE MUSICIEN -->
+<section class="slide s2">
+  <div class="in"><div class="mus">
+    <div class="pt" data-a="1"><img src="assets/img/main.webp" alt="Aurel" loading="lazy"></div>
+    <div>
+      <div class="mv" data-a="1">II · LE MUSICIEN</div>
+      <h2 data-a="1">AUREL VALENÇAY</h2>
+      <div class="tempo" data-a="1">Andante, ma non troppo</div>
+      <dl class="pf" data-a="2">
+        <div><dt>ALIAS</dt><dd><span class="ko">작은 후작 · 벨벳 송곳니</span><span class="en">Little Marquis · The Velvet Fang</span></dd></div>
+        <div><dt>AGE</dt><dd><span class="ko">외견 18세 · 실제 104세</span><span class="en">Appears 18 · Actually 104</span> <small>(1805 – )</small></dd></div>
+        <div><dt>RACE</dt><dd><span class="ko">뱀파이어 — 1820년, 열다섯 겨울에 전환</span><span class="en">Vampire — turned in the winter of 1820</span></dd></div>
+        <div><dt>HEIGHT</dt><dd><span class="ko">167cm, 영원히</span><span class="en">167 cm, forever</span></dd></div>
+        <div><dt>LOOKS</dt><dd><span class="ko">은빛 금발, 고양이 같은 옅은 회색 눈</span><span class="en">Silver-blonde waves, pale feline grey eyes</span></dd></div>
+        <div><dt>SCENT</dt><dd><span class="ko">차가운 아이리스, 잉크 밴 양피지, 겨울 민트</span><span class="en">Cold iris, inked parchment, winter mint</span></dd></div>
+        <div><dt>TREASURE</dt><dd><span class="ko">1742년산 과르네리 델 제수 바이올린</span><span class="en">A 1742 Guarneri del Gesù violin</span></dd></div>
+      </dl>
+      <div class="lh" data-a="3">
+        <div><h5>LIKES</h5><div class="tags">
+          <span class="tag l ko">바이올린</span><span class="tag l en">Violin</span><span class="tag l ko">밤의 파리</span><span class="tag l en">Paris at night</span><span class="tag l ko">고딕 문학</span><span class="tag l en">Gothic literature</span><span class="tag l ko">태엽 시계</span><span class="tag l en">Pocket watches</span>
+        </div></div>
+        <div><h5>HATES</h5><div class="tags">
+          <span class="tag h ko">"꼬마"</span><span class="tag h en">"Boy"</span><span class="tag h ko">동정</span><span class="tag h en">Pity</span><span class="tag h ko">재즈와 전깃불</span><span class="tag h en">Jazz & electric light</span><span class="tag h ko">햇빛</span><span class="tag h en">Sunlight</span>
+        </div></div>
       </div>
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- SCENARIOS -->
-<section id="scenarios">
-  <div class="wrap">
-    <div class="sh reveal"><div class="no">III · SCENARIOS</div><h2>THREE NIGHTS IN PARIS</h2>
-      <p class="ko">세 가지 시작 장면 중 하나를 골라 이야기를 시작하세요.</p><p class="en">Choose one of three openings.</p><div class="orn">✦</div></div>
-    <div class="scn">
-      <article class="card reveal">
-        <div class="cimg"><img src="assets/img/w_cafe.webp" alt="Café Lumière" loading="lazy"><span class="num">I</span></div>
-        <div class="ctext">
-          <div class="when">1924 · 05 · 20 — CAFÉ LUMIÈRE</div>
+<!-- III · SA VOIX -->
+<section class="slide s3">
+  <div class="bg"><img src="assets/img/p_opera.webp" alt="" loading="lazy"></div>
+  <div class="in"><div class="voice">
+    <div class="mv" data-a="1">III · SA VOIX</div>
+    <div class="tempo" data-a="1" style="margin:8px 0 0">Recitativo</div>
+    <div class="qbox" data-a="2" id="qbox">
+      <div class="qt on"><div class="bigq">“</div><p class="ko">이 얼굴로 내 본성을 가늠하지 마시죠.<br>당신 조부모가 죽은 세월보다 더 오래, 이 얼굴로 살아왔으니까.</p><p class="en">Do not mistake this face for a measure of my nature. I have worn it for longer than your grandparents have been dead.</p><span class="orig">Do not mistake this face for a measure of my nature.</span></div>
+      <div class="qt"><div class="bigq">“</div><p class="ko">나를 보고 소년이 보인다고요? 귀엽군요.<br>내 눈엔 유통기한이 붙은 고기가 보이는데.</p><p class="en">You look at me and see a boy. How quaint. I look at you and see meat with an expiration date.</p><span class="orig">How quaint.</span></div>
+      <div class="qt"><div class="bigq">“</div><p class="ko">불멸은 선물이 아니다.<br>영원의 가면을 쓴 반복일 뿐.</p><p class="en">Immortality is not a gift — it is repetition wearing the mask of eternity.</p><span class="orig">Repetition wearing the mask of eternity.</span></div>
+      <div class="qt"><div class="bigq">“</div><p class="ko">이젠 없어진 카페에서 쇼펜하우어를 원서로 읽었습니다.<br>그런데 당신은 내게 쿠키를 건네며 숙제는 다 했냐고 묻는군요.</p><p class="en">I have read Schopenhauer in the original German in cafés that no longer exist. And yet you offer me a cookie and ask if I've finished my homework.</p><span class="orig">— said with venomous courtesy</span></div>
+    </div>
+    <div class="qnav" data-a="3" id="qnav"><button class="on">I</button><button>II</button><button>III</button><button>IV</button></div>
+  </div></div>
+</section>
+
+<!-- IV · TROIS NUITS -->
+<section class="slide s4">
+  <div class="in">
+    <div class="mv" data-a="1">IV · TROIS NUITS</div>
+    <h2 data-a="1"><span class="ko">세 번의 밤</span><span class="en">THREE NIGHTS</span></h2>
+    <div class="tempo" data-a="1"><span class="ko">세 가지 시작 장면 중 하나를 골라 막을 올리세요.</span><span class="en">Choose one of three openings to raise the curtain.</span></div>
+    <div class="nights">
+      <article class="nt" data-a="2">
+        <div class="im"><img src="assets/img/w_cafe.webp" alt="" loading="lazy"><span>I</span></div>
+        <div class="tx">
+          <div class="wh">1924·05·20 — CAFÉ LUMIÈRE</div>
           <h3><span class="ko">우연을 가장한 만남</span><span class="en">A Staged Coincidence</span></h3>
-          <div class="rel"><span class="ko">♡ 짝사랑 · 첫 만남</span><span class="en">♡ Unrequited · First meeting</span></div>
-          <p class="ex ko">서점에서 스친 당신의 무심한 시선 — '소년'을 보는 그 눈빛이 칼날처럼 꽂혔다. 밤새 당신의 동선을 '탐구'한 오렐은 당신이 매주 수요일 들르는 카페 뤼미에르에 먼저 와 앉아 있다.</p>
-          <p class="ex en">Your indifferent glance in a bookshop — the look one gives a boy — cut him like a blade. After a night spent “studying” your routine, Aurel is already seated at Café Lumière, where you stop every Wednesday.</p>
-          <div class="diary"><b>DIARY · 1924-05-20</b><span class="ko">나는 완전히 길을 잃었다. 오늘 그 사람 앞에서 모든 이성적 사고가 녹아내렸다.</span><span class="en">I am utterly lost. Today every rational thought melted away before them.</span></div>
+          <div class="rl"><span class="ko">♡ 짝사랑 · 첫 만남</span><span class="en">♡ Unrequited · first meeting</span></div>
+          <p><span class="ko">서점에서 '소년'을 보듯 스친 당신의 시선. 밤새 당신을 '탐구'한 그는 수요일 오후의 카페에 먼저 와 있다.</span><span class="en">You glanced at him as one glances at a boy. After a night “studying” you, he is already waiting at your Wednesday café.</span></p>
+          <div class="dy"><b>DIARY</b><span class="ko">나는 완전히 길을 잃었다.</span><span class="en">I am utterly lost.</span></div>
         </div>
       </article>
-      <article class="card reveal">
-        <div class="cimg"><img src="assets/img/w_opera.webp" alt="Opéra Garnier" loading="lazy"><span class="num">II</span></div>
-        <div class="ctext">
-          <div class="when">1924 · 10 · 16 — OPÉRA GARNIER</div>
+      <article class="nt" data-a="3">
+        <div class="im"><img src="assets/img/w_opera.webp" alt="" loading="lazy"><span>II</span></div>
+        <div class="tx">
+          <div class="wh">1924·10·16 — OPÉRA GARNIER</div>
           <h3><span class="ko">샹들리에 아래에서</span><span class="en">Beneath the Chandelier</span></h3>
-          <div class="rel"><span class="ko">✦ 낯선 사람 · 위험한 첫인사</span><span class="en">✦ Strangers · A dangerous hello</span></div>
-          <p class="ex ko">가을비 내리는 오페라 가르니에의 무도회. 형편없는 왈츠에 이를 악물던 오렐이 군중 속에서 술에 취하지 않은 단 하나의 심장 박동을 듣는다. 그리고 고개도 돌리지 않은 채 말을 건넨다.</p>
-          <p class="ex en">An autumn gala at the Opéra Garnier. Gritting his teeth at a badly phrased waltz, Aurel hears one heartbeat in the crowd not yet dulled by wine — and speaks without turning his head.</p>
-          <div class="diary"><b>DIARY · 1924-10-16</b><span class="ko">메아리가 오늘 밤 더 커졌다. 광기가 너무 부드럽게 스며들어 위안으로 착각했는지도 모른다.</span><span class="en">The echo grew louder tonight. Madness might have seeped in so softly that I mistook it for comfort.</span></div>
+          <div class="rl"><span class="ko">✦ 낯선 사람 · 위험한 첫인사</span><span class="en">✦ Strangers · a dangerous hello</span></div>
+          <p><span class="ko">형편없는 왈츠가 흐르는 가을 무도회. 군중 속 단 하나의 맑은 심장 박동에, 그는 고개도 돌리지 않고 말을 건넨다.</span><span class="en">An autumn gala, a badly played waltz. Hearing one clear heartbeat in the crowd, he speaks without turning his head.</span></p>
+          <div class="dy"><b>DIARY</b><span class="ko">광기를 위안으로 착각했는지도 모른다.</span><span class="en">I may have mistaken madness for comfort.</span></div>
         </div>
       </article>
-      <article class="card reveal">
-        <div class="cimg"><img src="assets/img/w_bed.webp" alt="Dawn" loading="lazy"><span class="num">III</span></div>
-        <div class="ctext">
-          <div class="when">1924 · 04 · 11 — DAWN</div>
+      <article class="nt" data-a="4">
+        <div class="im"><img src="assets/img/w_bed.webp" alt="" loading="lazy"><span>III</span></div>
+        <div class="tx">
+          <div class="wh">1924·04·11 — L'AUBE</div>
           <h3><span class="ko">봄날의 새벽</span><span class="en">A Spring Dawn</span></h3>
-          <div class="rel"><span class="ko">♥ 연인</span><span class="en">♥ Lovers</span></div>
-          <p class="ex ko">얇은 커튼 사이로 스미는 봄 햇살. 소총과 횃불 앞에서도 떨지 않던 손이, 이 아침이 끝날지도 모른다는 생각에 떨린다. 그는 잠든 당신을 깨운다 — 센 강변 산책을 약속했으니까.</p>
-          <p class="ex en">Spring light through thin curtains. Hands that never shook before rifles and torches now tremble at the thought of this ending. He wakes you — you promised him a walk by the Seine.</p>
-          <div class="diary"><b>DIARY · 1924-04-11</b><span class="ko">오늘 그 사람의 입술에서 새벽을 맛보았고, 햇빛보다 더 두려웠다.</span><span class="en">Today I tasted dawn on their lips and feared it more than sunlight.</span></div>
+          <div class="rl"><span class="ko">♥ 연인</span><span class="en">♥ Lovers</span></div>
+          <p><span class="ko">총과 횃불 앞에서도 떨지 않던 손이, 이 아침이 끝날까 봐 떨린다. 센 강변 산책 약속을 받아내러 그가 당신을 깨운다.</span><span class="en">Hands that never shook before rifles now tremble at the thought of this ending. He wakes you to collect a promised walk by the Seine.</span></p>
+          <div class="dy"><b>DIARY</b><span class="ko">햇빛보다 더 두려웠다.</span><span class="en">I feared it more than sunlight.</span></div>
         </div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- SYSTEMS -->
-<section id="systems" class="systems">
-  <div class="wrap">
-    <div class="sh reveal"><div class="no">IV · SYSTEM</div><h2>FEATURES</h2><div class="orn">✦</div></div>
-    <div class="sysgrid">
-      <div class="sys reveal">
-        <div class="ic">STATUS</div>
-        <h3><span class="ko">상태창</span><span class="en">Status Bar</span></h3>
-        <p><span class="ko">매 응답마다 현재 기분, 날짜·시각, 장소, 복장, 행동, 그리고 입 밖에 내지 않은 속마음 한 줄을 보여줍니다.</span><span class="en">Every reply opens with his mood, date & time, location, attire, activity — and one unspoken thought.</span></p>
-        <div class="mock status">
-          <span>📖</span><span>1924/05/20 · 오후 3:12</span><span class="ko">카페 뤼미에르</span><span class="en">Café Lumière</span><span class="ko">미드나잇 블루 벨벳 코트</span><span class="en">Midnight-blue velvet</span>
-          <span><i class="ko">— 왜 하필 그 사람이었을까.</i><i class="en">— Why did it have to be them?</i></span>
+<!-- V · LE JOURNAL -->
+<section class="slide s5">
+  <div class="in">
+    <div class="mv" data-a="1">V · LE JOURNAL</div>
+    <h2 data-a="1"><span class="ko">시스템</span><span class="en">FEATURES</span></h2>
+    <div class="tempo" data-a="1">Adagio, sotto voce</div>
+    <div class="jr">
+      <div class="book" data-a="2">
+        <h4>STATUS</h4>
+        <div class="st"><span>📖</span><span>1924/05/20 · 15:12</span><span class="ko">카페 뤼미에르</span><span class="en">Café Lumière</span><span class="ko">벨벳 코트</span><span class="en">Velvet coat</span><span><i class="ko">왜 하필 그 사람이었을까.</i><i class="en">Why did it have to be them?</i></span></div>
+        <span class="dt">DIARY · 1924 · 04 · 11</span>
+        <div class="en-t"><span class="ko">오늘 그 사람의 입술에서 새벽을 맛보았고, 햇빛보다 더 두려웠다. 얼마나 기꺼이 불타오르며 머물고 싶어 할지, 그것이 두려웠다.</span><span class="en">Today I tasted dawn on their lips and feared it more than sunlight; I feared how willingly I would burn to stay.</span></div>
+        <div class="sig">— A. V.</div>
+        <div class="bnote"><span class="ko">매 응답 상단엔 기분·시각·장소·복장·행동·속마음이, 하루가 끝날 무렵엔 그가 결코 소리 내 말하지 않을 140자의 일기가 남습니다.</span><span class="en">Each reply opens with his mood, time, place, attire, activity and a hidden thought. At day's end, a 140-character diary entry — truths he would never say aloud.</span></div>
+      </div>
+      <div class="feat">
+        <div data-a="3">
+          <div class="k">RELATIONSHIP</div>
+          <h3><span class="ko">관계 설정</span><span class="en">Relationship Modes</span></h3>
+          <p><span class="ko">로어북에서 출발점을 고르세요.</span><span class="en">Pick your starting point in the lorebook.</span></p>
+          <div class="rels">
+            <div><b>I</b><span class="ko">아무 사이 아님<small>… 가능성은 열려 있다</small></span><span class="en">Nothing at all<small>…but who knows</small></span></div>
+            <div class="on"><b>II</b><span class="ko">첫눈에 반함<small>기본값</small></span><span class="en">Love at first sight<small>default</small></span></div>
+            <div><b>III</b><span class="ko">연인<small>그의 정체를 모름</small></span><span class="en">Lovers<small>unaware of what he is</small></span></div>
+            <div><b>IV</b><span class="ko">연인<small>그의 정체를 앎</small></span><span class="en">Lovers<small>aware of what he is</small></span></div>
+          </div>
         </div>
-      </div>
-      <div class="sys reveal">
-        <div class="ic">DIARY</div>
-        <h3><span class="ko">오렐의 일기</span><span class="en">Aurel's Diary</span></h3>
-        <p><span class="ko">밤이 깊거나 날짜가 바뀔 때, 큰 사건이 지나간 뒤 — 오렐은 결코 소리 내 말하지 않을 진심을 140자 일기로 남깁니다.</span><span class="en">At night's end or after a revelation, he writes a private 140-character entry — the truths he'd never say aloud.</span></p>
-        <div class="mock dmock"><span class="d">1924 · 04 · 11</span><span class="ko">얼마나 기꺼이 불타오르며 머물고 싶어 할지, 그것이 두려웠다.</span><span class="en">I feared how willingly I would burn to stay.</span></div>
-      </div>
-      <div class="sys reveal">
-        <div class="ic">RELATIONSHIP</div>
-        <h3><span class="ko">관계 설정</span><span class="en">Relationship Modes</span></h3>
-        <p><span class="ko">로어북에서 원하는 출발점을 고르세요.</span><span class="en">Pick your starting point in the lorebook.</span></p>
-        <div class="rels">
-          <div><b>I</b><span class="ko">아무 사이 아님 <small>… 하지만 가능성은 열려 있다</small></span><span class="en">Nothing at all <small>…but who knows</small></span></div>
-          <div class="on"><b>II</b><span class="ko">첫눈에 반함 <small>기본값 · 오렐의 짝사랑</small></span><span class="en">Love at first sight <small>default · his crush</small></span></div>
-          <div><b>III</b><span class="ko">연인 <small>그의 정체를 모름</small></span><span class="en">Lovers <small>unaware of what he is</small></span></div>
-          <div><b>IV</b><span class="ko">연인 <small>그의 정체를 앎</small></span><span class="en">Lovers <small>aware of what he is</small></span></div>
-        </div>
-      </div>
-      <div class="sys reveal">
-        <div class="ic">LANGUAGE · ART</div>
-        <h3><span class="ko">이중 언어 · 표정 일러스트</span><span class="en">Bilingual · Expressions</span></h3>
-        <p><span class="ko">한국어·영어 시작 메시지와 상태창/일기를 모두 지원하며, 감정에 따라 바뀌는 스탠딩 일러스트와 장면 배경이 내장되어 있습니다.</span><span class="en">Full Korean & English greetings, status and diary — plus built-in emotion sprites and scene backgrounds.</span></p>
-        <div class="langmock">
-          <div><b>한국어</b>“있잖아요, 만약 이 물건이 오늘 밤 떨어진다면…”</div>
-          <div><b>ENGLISH</b>“You know, if this thing falls tonight…”</div>
+        <div data-a="4">
+          <div class="k">LANGUAGE · ART</div>
+          <h3><span class="ko">한국어 / English · 표정 일러스트</span><span class="en">Korean / English · Expressions</span></h3>
+          <p><span class="ko">시작 메시지·상태창·일기 모두 두 언어를 지원하고, 감정에 따라 바뀌는 스탠딩 일러스트와 장면 배경이 내장되어 있습니다.</span><span class="en">Greetings, status and diary in both languages, with built-in emotion sprites and scene backgrounds.</span></p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EXPRESSIONS -->
-<section id="expressions">
-  <div class="wrap">
-    <div class="sh reveal"><div class="no">V · GALLERY</div><h2>EXPRESSIONS</h2><div class="orn">✦</div></div>
-    <div class="egrid" id="egrid"></div>
-    <p class="hint"><span class="ko">카드를 누르면 같은 감정의 다른 포즈로 바뀝니다.</span><span class="en">Click a card to cycle through poses.</span></p>
-  </div>
-</section>
-
-<!-- WORLD -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sh reveal"><div class="no">VI · WORLD</div><h2>LES ANNÉES FOLLES</h2><div class="orn">✦</div></div>
-    <div class="world reveal">
-      <div class="w"><div class="k">SETTING</div><h4><span class="ko">광란의 시대, 파리</span><span class="en">Paris, the Crazy Years</span></h4><p><span class="ko">대전의 상처 위에서 춤추는 도시. 재즈, 전깃불, 짧은 머리의 가르손느 — 오렐이 경멸하는 모든 '근대'가 밤을 채운다.</span><span class="en">A city dancing on the wounds of the Great War — jazz, electric light, the garçonne. Everything modern Aurel despises.</span></p></div>
-      <div class="w"><div class="k">RESIDENCE</div><h4>Hôtel Valençay</h4><p><span class="ko">버려진 듯한 마레 지구의 저택. 다락방엔 잠긴 트렁크 열일곱 개, 그리고 그가 사랑하고 죽인 이들의 초상화가 걸린 '갤러리'.</span><span class="en">A seemingly abandoned Marais townhouse. Seventeen locked trunks in the attic, and a “gallery” of everyone he has loved or killed.</span></p></div>
-      <div class="w"><div class="k">SIRE</div><h4>Delphine</h4><p><span class="ko">그를 '너무 아름다워 죽게 둘 수 없다'며 물었던 수백 살의 뱀파이어. "달아나렴, 꼬마야." — 그 말이 아직도 그를 쫓는다.</span><span class="en">The ancient vampire who found him “too exquisite to surrender to mortality.” “Run, little boy.” Her words still haunt him.</span></p></div>
-      <div class="w"><div class="k">COVEN</div><h4><span class="ko">생제르맹 회합</span><span class="en">Coven of Saint-Germain</span></h4><p><span class="ko">파리 뱀파이어들의 느슨한 연합. 그들은 오렐을 재능 있지만 불안정한 존재로 본다.</span><span class="en">A loose association of Parisian vampires who see him as talented but unstable.</span></p></div>
-      <div class="w"><div class="k">CONTACT</div><h4>Lucien Moreau</h4><p><span class="ko">돈과 정보를 받고 특정 '실종'을 눈감아 주는 부패한 경위.</span><span class="en">A corrupt police inspector who looks away from certain disappearances — for a price.</span></p></div>
-      <div class="w"><div class="k">CODE</div><h4><span class="ko">사냥꾼의 규율</span><span class="en">The Hunter's Code</span></h4><p><span class="ko">아이는 결코 전환시키지 않는다. 무력한 자는 먹잇감으로 삼지 않는다. 그에게 옳고 그름은 윤리가 아니라 미학이다.</span><span class="en">He never turns a child, never feeds on the helpless. For him, right and wrong are not ethics but aesthetics.</span></p></div>
+<!-- VI · LES VISAGES -->
+<section class="slide s6">
+  <div class="in"><div class="fc">
+    <div class="stage" id="stage" data-a="1"><img id="fimg" src="assets/img/expr/smile1.webp" alt=""><span class="pg" id="fpg">1 / 5</span></div>
+    <div>
+      <div class="mv" data-a="1">VI · LES VISAGES</div>
+      <div class="tempo" data-a="1" style="margin:8px 0 14px">Variations sur un thème</div>
+      <div class="name" data-a="2" id="fname">Sourire<small>미소</small></div>
+      <div class="chips" data-a="3" id="chips"></div>
+      <p class="hint" data-a="3"><span class="ko">일러스트를 누르면 같은 감정의 다른 포즈로 바뀝니다.</span><span class="en">Click the portrait to cycle through poses.</span></p>
     </div>
-  </div>
+  </div></div>
 </section>
 
-<!-- CTA -->
-<section class="cta">
-  <div class="wrap reveal">
-    <h2><span class="ko">당신은 그를 소년으로 보겠습니까,<br>아니면 남자로 보겠습니까?</span><span class="en">Will you see a boy —<br>or a man?</span></h2>
-    <p><span class="ko">RisuAI에서 .charx 파일을 불러와 시작하세요.</span><span class="en">Import the .charx file into RisuAI to begin.</span></p>
-    <div class="btns"><a class="btn primary" href="Aurel.charx" download><span class="ko">봇 다운로드</span><span class="en">DOWNLOAD</span></a></div>
-  </div>
+<!-- FINALE -->
+<section class="slide s7">
+  <div class="bg"><img src="assets/img/w_opera.webp" alt="" loading="lazy"></div>
+  <div class="in"><div class="fin">
+    <div class="mv" data-a="1" style="justify-content:center">FINALE</div>
+    <h2 data-a="2" style="margin-top:18px"><span class="ko">당신은 그를 소년으로 보겠습니까,<br>아니면 남자로 보겠습니까?</span><span class="en">Will you see a boy —<br>or a man?</span></h2>
+    <p data-a="3"><span class="ko">막이 오릅니다. RisuRealm에서 받아 바로 시작하세요.</span><span class="en">The curtain rises. Get him on RisuRealm.</span></p>
+    <div class="btns" data-a="4">
+      <a class="btn p" href="https://realm.risuai.net/character/f674591c-9935-449c-bd16-87c1d0a067b6" target="_blank" rel="noopener"><span class="ko">RisuRealm에서 받기</span><span class="en">GET ON RISUREALM</span></a>
+      <button class="btn g" data-go="0">↺ BIS</button>
+    </div>
+    <div class="cr" data-a="5">AUREL v1.1 · MADE FOR <b>RISUAI</b></div>
+  </div></div>
 </section>
 
-<footer>
-  <span class="brand">AUREL</span>
-  © 붕쉐 · Aurel v1.1 · Made for RisuAI
-</footer>
+</main>
+
+<div class="fade-t"></div><div class="fade-b"></div>
+<nav class="staff" aria-label="movements">
+  <button class="arrow" id="prev" aria-label="previous">←</button>
+  <div class="lines"><div class="notes" id="notes"></div></div>
+  <button class="arrow" id="next" aria-label="next">→</button>
+</nav>
 
 <script>
-// language
 const root=document.documentElement;
 function setLang(l){root.dataset.lang=l;root.lang=l;try{localStorage.setItem('aurel-lang',l)}catch(e){}}
-try{const s=localStorage.getItem('aurel-lang');if(s)setLang(s);else if(!navigator.language.startsWith('ko'))setLang('en')}catch(e){}
+try{const s=localStorage.getItem('aurel-lang');if(s)setLang(s);else if(!(navigator.language||'').startsWith('ko'))setLang('en')}catch(e){}
 document.querySelectorAll('[data-set]').forEach(b=>b.onclick=()=>setLang(b.dataset.set));
 
-// expressions
-const EX=[['smile','미소'],['thinking','생각'],['curious','호기심'],['shy','수줍음'],['love','애정'],['lovestruck','반함'],['jealous','질투'],['annoyed','짜증'],['angry','분노'],['sad','슬픔'],['depressed','우울'],['surprised','놀람'],['confused','혼란'],['bored','지루함'],['disgusted','혐오']];
-const g=document.getElementById('egrid');
-EX.forEach(([k,ko])=>{
-  const c=document.createElement('div');c.className='ex-c reveal';let i=1;
-  c.innerHTML=`<img src="assets/img/expr/${k}1.webp" alt="${k}" loading="lazy"><div class="lb"><b><span class="en">${k.toUpperCase()}</span><span class="ko">${ko}</span></b><i>1 / 5</i></div>`;
-  c.onclick=()=>{i=i%5+1;c.querySelector('img').src=`assets/img/expr/${k}${i}.webp`;c.querySelector('i').textContent=`${i} / 5`};
-  g.appendChild(c);
+/* slides */
+const track=document.getElementById('track'),slides=[...track.children],N=slides.length;
+const LABELS=['OUV.','I','II','III','IV','V','VI','FIN'];
+const HEIGHTS=[22,15,8,11,4,1,8,22]; // note positions on the staff (px from top)
+const notes=document.getElementById('notes');
+LABELS.forEach((l,i)=>{const n=document.createElement('button');n.className='note';n.innerHTML=`<i style="top:${HEIGHTS[i]}px"></i><b>${l}</b>`;n.onclick=()=>go(i);n.setAttribute('aria-label',l);notes.appendChild(n)});
+let cur=-1,lock=false;
+function go(i){
+  i=Math.max(0,Math.min(N-1,i)); if(i===cur)return;
+  cur=i; track.style.transform=`translateX(${-100*i}vw)`;
+  slides.forEach((s,k)=>{s.classList.toggle('on',k===i); if(k===i)s.scrollTop=0});
+  [...notes.children].forEach((n,k)=>n.classList.toggle('on',k===i));
+  document.getElementById('prev').disabled=i===0; document.getElementById('next').disabled=i===N-1;
+  history.replaceState(null,'','#'+i);
+  lock=true; setTimeout(()=>lock=false,1000);
+}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));
+document.querySelector('.brand').onclick=e=>{e.preventDefault();go(0)};
+addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1)}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+  if(e.key==='Home')go(0); if(e.key==='End')go(N-1);
 });
+addEventListener('wheel',e=>{
+  const s=slides[cur],d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;
+  if(Math.abs(d)<12)return;
+  const canScroll=s.scrollHeight>s.clientHeight+2;
+  if(canScroll&&Math.abs(e.deltaY)>=Math.abs(e.deltaX)){
+    const atTop=s.scrollTop<=0,atBot=s.scrollTop+s.clientHeight>=s.scrollHeight-2;
+    if((d>0&&!atBot)||(d<0&&!atTop))return;
+  }
+  if(lock)return; go(cur+(d>0?1:-1));
+},{passive:true});
+let tx=0,ty=0;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)go(cur+(dx<0?1:-1))},{passive:true});
+addEventListener('resize',()=>{track.style.transition='none';track.style.transform=`translateX(${-100*cur}vw)`;requestAnimationFrame(()=>track.style.transition='')});
+go(Math.min(N-1,parseInt(location.hash.slice(1))||0));
 
-// reveal
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+/* quotes */
+const qs=[...document.querySelectorAll('.qt')],qb=[...document.querySelectorAll('#qnav button')];let qi=0;
+function q(i){qi=i;qs.forEach((x,k)=>x.classList.toggle('on',k===i));qb.forEach((x,k)=>x.classList.toggle('on',k===i))}
+qb.forEach((b,i)=>b.onclick=()=>q(i));
+setInterval(()=>{if(cur===3)q((qi+1)%qs.length)},7000);
+
+/* expressions */
+const EX=[['smile','Sourire','미소'],['thinking','Pensif','생각'],['curious','Curieux','호기심'],['shy','Timide','수줍음'],['love','Tendresse','애정'],['lovestruck','Épris','반함'],['jealous','Jaloux','질투'],['annoyed','Agacé','짜증'],['angry','Colère','분노'],['sad','Tristesse','슬픔'],['depressed','Mélancolie','우울'],['surprised','Surpris','놀람'],['confused','Perplexe','혼란'],['bored','Ennui','지루함'],['disgusted','Dégoût','혐오']];
+const chips=document.getElementById('chips'),fimg=document.getElementById('fimg'),fpg=document.getElementById('fpg'),fname=document.getElementById('fname');
+let ek=0,ep=1;
+function face(k,p){ek=k;ep=p;const[e,fr,ko]=EX[k];fimg.src=`assets/img/expr/${e}${p}.webp`;fpg.textContent=`${p} / 5`;
+  fname.innerHTML=`${fr}<small>${ko} · ${e}</small>`;[...chips.children].forEach((c,i)=>c.classList.toggle('on',i===k))}
+EX.forEach(([e],i)=>{const b=document.createElement('button');b.textContent=e.toUpperCase();b.onclick=()=>face(i,1);chips.appendChild(b)});
+document.getElementById('stage').onclick=()=>face(ek,ep%5+1);
+face(0,1);
+// preload expressions lazily after load
+addEventListener('load',()=>setTimeout(()=>EX.forEach(([e])=>{const i=new Image();i.src=`assets/img/expr/${e}1.webp`}),1500));
 </script>
 </body>
 </html>
